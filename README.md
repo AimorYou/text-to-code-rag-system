@@ -57,10 +57,10 @@
 **CodeSearchNet**: Крупномасштабный датасет для поиска кода
 
 - ~2 млн пар текст-код
-- 6 языков программирования (используется подмножество Python: ~100k примеров)
+- 6 языков программирования (используется подмножество Python: 10k примеров)
 - Размер: ~20 ГБ в необработанном виде
 - [GitHub репозиторий](https://github.com/github/CodeSearchNet)
-- [HuggingFace датасет](https://huggingface.co/datasets/code_search_net)
+- [HuggingFace датасет](https://huggingface.co/datasets/espejelomar/code_search_net_python_10000_examples)
 
 ### Разбиение данных
 
@@ -134,22 +134,28 @@ uv run mlflow server --host 127.0.0.1 --port 8080
 3. Если нет - загружаются из HuggingFace и добавляются в DVC
 4. Автоматически делается `dvc push` в настроенный remote
 
-## Обучение
+## Запуск проекта
 
-### Быстрый старт
+### Обучение
 
-Обучите модель с конфигурацией по умолчанию:
+Обучите модель с конфигурацией по умолчанию (Обучаются только адаптеры):
 
 ```bash
 uv run text-to-code-rag train
 ```
 
-### Быстрое обучение (только проекционные слои)
-
-Для быстрого обучения можно заморозить энкодеры и обучать только проекционные слои:
+Для более качественного обучения можно дообучать все параметры:
 
 ```bash
-uv run python -m text_to_code_rag.commands train model=frozen_encoders
+uv run text-to-code-rag train --config_name=train model=base_model
+```
+
+### Инференс
+
+Примените модель с конфигурацией по умолчанию:
+
+```bash
+uv run text-to-code-rag infer
 ```
 
 ### Тестирование
