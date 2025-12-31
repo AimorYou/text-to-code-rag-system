@@ -1,0 +1,10 @@
+text_model_name: distilbert-base-uncased
+code_model_name: microsoft/codebert-base
+embedding_dim: 768
+learning_rate: 0.001
+temperature: 0.07
+freeze_encoders: true
+recall_k_values:
+  - 1
+  - 5
+  - 10

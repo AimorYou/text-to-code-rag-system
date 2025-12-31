@@ -1,0 +1,7 @@
+[core]
+    remote = local_storage
+    autostage = true
+['remote "local"']
+    url = .dvc/cache
+['remote "local_storage"']
+    url = /Users/seh9/Desktop/REPO/text-to-code-rag-system/dvc_storage

@@ -1,0 +1,16 @@
+defaults:
+  - model: frozen_encoders
+  - data: base_data
+  - logging: mlflow
+  - _self_
+
+training:
+  seed: 42
+  max_epochs: 3
+  batch_size: 32
+  num_workers: 0
+  accelerator: auto
+  devices: 1
+  log_every_n_steps: 2
+  checkpoint_dir: checkpoints
+  early_stopping_patience: 3

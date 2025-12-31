@@ -1,0 +1,13 @@
+# Data configuration
+dataset_name: "espejelomar/code_search_net_python_10000_examples"
+data_dir: "data/raw"
+use_dvc: true
+
+# Tokenization
+max_text_length: 128
+max_code_length: 256
+
+# Dataset sizes
+train_subset_size: 960
+val_subset_size: 480
+test_subset_size: 480
