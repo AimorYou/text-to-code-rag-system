@@ -27,6 +27,7 @@ def load_model(checkpoint_path: Path, cfg: DictConfig) -> BiEncoderModel:
         learning_rate=cfg.model.learning_rate,
         temperature=cfg.model.temperature,
         recall_k_values=cfg.model.recall_k_values,
+        weights_only=False,
     )
     model.eval()
     return model
@@ -54,8 +55,12 @@ def encode_query(
         return_tensors="pt",
     )
 
+    device = next(model.parameters()).device
+    input_ids = encoded["input_ids"].to(device)
+    attention_mask = encoded["attention_mask"].to(device)
+
     with torch.no_grad():
-        embedding = model.encode_text(encoded["input_ids"], encoded["attention_mask"])
+        embedding = model.encode_text(input_ids, attention_mask)
 
     return embedding
 
@@ -139,6 +144,8 @@ def infer(
 
     code_tokenizer = AutoTokenizer.from_pretrained(cfg.model.code_model_name)
 
+    device = next(model.parameters()).device
+
     code_embeddings = []
     for code in dummy_codes:
         encoded = code_tokenizer(
@@ -148,8 +155,10 @@ def infer(
             truncation=True,
             return_tensors="pt",
         )
+        input_ids = encoded["input_ids"].to(device)
+        attention_mask = encoded["attention_mask"].to(device)
         with torch.no_grad():
-            embedding = model.encode_code(encoded["input_ids"], encoded["attention_mask"])
+            embedding = model.encode_code(input_ids, attention_mask)
         code_embeddings.append(embedding)
 
     code_embeddings = torch.cat(code_embeddings, dim=0)

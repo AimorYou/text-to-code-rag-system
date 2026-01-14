@@ -210,6 +210,7 @@ __marimo__/
 # MLflow artifacts and tracking
 mlruns/
 mlartifacts/
+mlflow.db
 
 # DVC cache and local storage
 .dvc/cache/
