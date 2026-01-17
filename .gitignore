@@ -230,3 +230,4 @@ checkpoints/
 .cache/
 data/raw/
 data/processed/
+.DS_Store
